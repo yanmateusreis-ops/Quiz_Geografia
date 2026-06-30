@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão Histórica - A Industrialização em Estância-SE</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #eef5fc;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 750px;
+            width: 100%;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            border-top: 8px solid #2b78c5;
+            margin-top: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2b78c5;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .quiz-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .question-card {
+            background: #f8fbfe;
+            border: 1px solid #dbe7f4;
+            padding: 20px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .question-card:hover {
+            border-color: #2b78c5;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a4d80;
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .option-item:hover {
+            background: #f1f7fc;
+        }
+
+        .option-item input[type="radio"] {
+            margin-top: 4px;
+            cursor: pointer;
+            accent-color: #2b78c5;
+        }
+
+        .option-text {
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .btn-submit {
+            background-color: #2b78c5;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            align-self: center;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(43, 120, 197, 0.3);
+        }
+
+        .btn-submit:hover {
+            background-color: #1e5692;
+        }
+
+        #result-modal {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+        }
+
+        .success-box {
+            background-color: #def7ec;
+            border: 1px solid #b3f5d4;
+            color: #03543f;
+        }
+
+        .feedback-correct {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-top: 5px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .feedback-incorrect {
+            color: #c62828;
+            font-weight: bold;
+            margin-top: 5px;
+            font-size: 13px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🎮 Quiz de Revisão Histórica</h1>
+        <p>Parabéns por concluir as fases! Responda às perguntas abaixo para consolidar seu aprendizado sobre a industrialização de Estância-SE.</p>
+    </div>
+
+    <form id="quizForm" class="quiz-form" onsubmit="evaluateQuiz(event)">
+        <!-- Question 1 -->
+        <div class="question-card" id="q1-card">
+            <div class="question-title">1. Durante a primeira fase do jogo (Período Colonial), o cenário é decorado com amontoados de cana-de-açúcar. Qual era a importância desse elemento na economia da época?</div>
+            <ul class="options-list">
+                <li class="option-item">
+                    <input type="radio" name="q1" value="correct" id="q1-a">
+                    <label for="q1-a" class="option-text">Era a principal riqueza do Brasil Colonial, cultivada em engenhos que moviam a economia antes do surgimento das indústrias.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q1" value="wrong1" id="q1-b">
+                    <label for="q1-b" class="option-text">Servia exclusivamente para alimentar o gado que os jesuítas criavam na vila de Estância.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q1" value="wrong2" id="q1-c">
+                    <label for="q1-c" class="option-text">Foi introduzida no Brasil apenas no século XIX para substituir o cultivo de algodão.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q1" value="wrong3" id="q1-d">
+                    <label for="q1-d" class="option-text">Era utilizada como combustível direto para abastecer as primeiras máquinas a vapor.</label>
+                </li>
+            </ul>
+            <div class="feedback-correct" id="q1-correct">✅ Correto! A cana-de-açúcar foi a base econômica do período colonial, processada em engenhos.</div>
+            <div class="feedback-incorrect" id="q1-incorrect">❌ Incorreto. A resposta certa é a primeira opção (base econômica colonial).</div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-card" id="q2-card">
+            <div class="question-title">2. De acordo com as explicações do Tutor, como o município de Estância começou a se originar entre os séculos XVII e XVIII?</div>
+            <ul class="options-list">
+                <li class="option-item">
+                    <input type="radio" name="q2" value="correct" id="q2-a">
+                    <label for="q2-a" class="option-text">Como uma vila formada por jesuítas e criadores de gado.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q2" value="wrong1" id="q2-b">
+                    <label for="q2-b" class="option-text">Como um porto industrial fundado por investidores ingleses.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q2" value="wrong2" id="q2-c">
+                    <label for="q2-c" class="option-text">A partir de uma grande colônia de imigrantes europeus focados na mineração.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q2" value="wrong3" id="q2-d">
+                    <label for="q2-d" class="option-text">Como um polo fabril planejado diretamente pela Coroa Portuguesa em 1500.</label>
+                </li>
+            </ul>
+            <div class="feedback-correct" id="q2-correct">✅ Correto! A formação inicial de Estância está ligada à colonização jesuítica e à expansão da pecuária.</div>
+            <div class="feedback-incorrect" id="q2-incorrect">❌ Incorreto. A vila original nasceu da presença de jesuítas e criadores de gado.</div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-card" id="q3-card">
+            <div class="question-title">3. Na transição para a segunda fase (século XIX), qual recurso natural de Estância continua sendo fundamental para mover as fábricas?</div>
+            <ul class="options-list">
+                <li class="option-item">
+                    <input type="radio" name="q3" value="correct" id="q3-a">
+                    <label for="q3-a" class="option-text">A força da água dos rios, como o Rio Piauitinga.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q3" value="wrong1" id="q3-b">
+                    <label for="q3-b" class="option-text">As grandes jazidas de carvão mineral encontradas no solo de Sergipe.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q3" value="wrong2" id="q3-c">
+                    <label for="q3-c" class="option-text">O vento constante do litoral estanciano.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q3" value="wrong3" id="q3-d">
+                    <label for="q3-d" class="option-text">A queima do bagaço da cana-de-açúcar em larga escala.</label>
+                </li>
+            </ul>
+            <div class="feedback-correct" id="q3-correct">✅ Correto! A energia hidráulica (força dos rios como o Piauitinga) foi essencial para as primeiras indústrias têxteis.</div>
+            <div class="feedback-incorrect" id="q3-incorrect">❌ Incorreto. O Rio Piauitinga e a força das águas foram determinantes.</div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-card" id="q4-card">
+            <div class="question-title">4. Na segunda fase do jogo, qual importante marco histórico e arquitetônico da industrialização de Estância aparece representado no plano de fundo?</div>
+            <ul class="options-list">
+                <li class="option-item">
+                    <input type="radio" name="q4" value="correct" id="q4-a">
+                    <label for="q4-a" class="option-text">A Fábrica Têxtil Santa Cruz.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q4" value="wrong1" id="q4-b">
+                    <label for="q4-b" class="option-text">O Engenho Central de Sergipe.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q4" value="wrong2" id="q4-c">
+                    <label for="q4-c" class="option-text">A Usina Hidrelétrica de Paulo Afonso.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q4" value="wrong3" id="q4-d">
+                    <label for="q4-d" class="option-text">A Companhia de Navegação do Rio Real.</label>
+                </li>
+            </ul>
+            <div class="feedback-correct" id="q4-correct">✅ Correto! A Fábrica Santa Cruz é o grande símbolo dessa fase industrial de tecidos no município.</div>
+            <div class="feedback-incorrect" id="q4-incorrect">❌ Incorreto. A resposta correta é a Fábrica Têxtil Santa Cruz.</div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-card" id="q5-card">
+            <div class="question-title">5. Os fardos brancos espalhados pela segunda fase servem como plataformas. Qual é essa matéria-prima?</div>
+            <ul class="options-list">
+                <li class="option-item">
+                    <input type="radio" name="q5" value="correct" id="q5-a">
+                    <label for="q5-a" class="option-text">Algodão bruto, que alimentava os teares das fábricas têxteis de Estância.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q5" value="wrong1" id="q5-b">
+                    <label for="q5-b" class="option-text">Fardos de sal marinho extraído dos manguezais locais.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q5" value="wrong2" id="q5-c">
+                    <label for="q5-c" class="option-text">Sacos de farinha de mandioca para exportação.</label>
+                </li>
+                <li class="option-item">
+                    <input type="radio" name="q5" value="wrong3" id="q5-d">
+                    <label for="q5-d" class="option-text">Sacos de açúcar refinado produzidos nos novos engenhos a vapor.</label>
+                </li>
+            </ul>
+            <div class="feedback-correct" id="q5-correct">✅ Correto! O algodão era a base das fábricas de tecido, tornando Estância uma referência na região.</div>
+            <div class="feedback-incorrect" id="q5-incorrect">❌ Incorreto. Trata-se de algodão bruto para a tecelagem.</div>
+        </div>
+
+        <button type="submit" class="btn-submit">Enviar Respostas</button>
+    </form>
+
+    <div id="result-modal" class="success-box">
+        <h3>Resultado do Quiz</h3>
+        <p id="result-text"></p>
+    </div>
+</div>
+
+<script>
+    function evaluateQuiz(event) {
+        event.preventDefault();
+        let score = 0;
+        const totalQuestions = 5;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const correctBox = document.getElementById(`q${i}-correct`);
+            const incorrectBox = document.getElementById(`q${i}-incorrect`);
+            
+            if (selected) {
+                if (selected.value === 'correct') {
+                    score++;
+                    correctBox.style.display = 'block';
+                    incorrectBox.style.display = 'none';
+                } else {
+                    correctBox.style.display = 'none';
+                    incorrectBox.style.display = 'block';
+                }
+            } else {
+                correctBox.style.display = 'none';
+                incorrectBox.style.display = 'block';
+            }
+        }
+
+        const resultModal = document.getElementById('result-modal');
+        const resultText = document.getElementById('result-text');
+        resultModal.style.display = 'block';
+        resultText.innerText = `Você acertou ${score} de ${totalQuestions} perguntas!`;
+        
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
